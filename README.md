@@ -16,6 +16,5 @@ Balloons will keep appearing to click and burst, And the game carries on.
 
 Technologies Used:
 Game Development Framework for Phaser 3.
-JavaScript: It's the heart that powers all of these things.
-HTML5.
+The Game is still built in javascript and HTML5.
                                                                               Happy popping you might say and have fun playing the game!🙂
