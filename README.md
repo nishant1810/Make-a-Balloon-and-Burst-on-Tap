@@ -1,4 +1,4 @@
-Balloon Burst Game
+Balloon Burst Game🎈
 
 A fun and interactive web game bursting balloons at the click of a button. This game was made with Phaser 3 and has animated balloons, sound effects for popping, fun particle explosions when they burst!
 
@@ -18,4 +18,4 @@ Technologies Used:
 Game Development Framework for Phaser 3.
 JavaScript: It's the heart that powers all of these things.
 HTML5.
-                                                                              Happy popping you might say and have fun playing the game!
+                                                                              Happy popping you might say and have fun playing the game!🙂
