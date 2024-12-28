@@ -30,7 +30,16 @@
     let currentBalloon = null;
     let pumpCounter = 0;
     let currentLetterIndex = 0;
+    let score=0;
+    let scoreText;
+    let currentLevel =1;
+    let levelText;
+    let balloonSpeedMultiplier=1;
     let balloonImages = ['1.png', '2.png', '3.png', '4.png', '5.png', '6.png', '7.png', '8.png', '9.png', '10.png'];
+    let lives = 3;
+    let livesText;
+    let gameOverImage;
+    let gameOverText;
 
     function preload() {
     balloonImages.forEach(image => this.load.image(image, 'assests/' + image));
@@ -41,6 +50,7 @@
     this.load.audio('pop', 'assests/pop.mp3');
     this.load.image('burstParticle', 'assests/particle.png');
     this.load.image('tail', 'assests/tail.png');
+    this.load.image('gameover', 'assests/gameover.jpg'); 
 }
     function create() {
         this.background = this.add.image(config.width / 2, config.height / 2, 'background');
@@ -75,6 +85,10 @@
         });
         emitter.stop();
 
+        scoreText=this.add.text(10,10, `Score: ${score}`,{font: '32px Arial', fill: '#000000' });
+        levelText=this.add.text(config.width - 200,10, `Level: ${currentLevel}`,{font: '32px Arial', fill: '#000000'});
+        livesText = this.add.text(10, 50, `Lives: ${lives}`, { font: '32px Arial', fill: '#000000' });
+        
         this.time.addEvent({
             delay: 0,
             callback: () => { if (!currentBalloon) { startNewBalloon.call(this); } },
@@ -213,6 +227,8 @@
 
         currentBalloon = null;
     }
+    
+    let expectedLetter = 'A'; 
 
     function burstBalloon(balloon) {
         popSound.play();
@@ -224,10 +240,42 @@
         balloon.tail.destroy();
         balloon.destroy();
 
+        const balloonText=balloon.text.text;
+        if(balloonText==expectedLetter){
+            score+=10;
+            expectedLetter = String.fromCharCode(expectedLetter.charCodeAt(0) + 1);
+        }
+        else{
+            score-=10;
+            // lives--;
+        }
+        
+        scoreText.setText(`Score: ${score}`);
+        livesText.setText(`Lives: ${lives}`);
+
         const index = balloons.indexOf(balloon);
         if (index > -1) {
             balloons.splice(index, 1);
         }
+
+        if(lives==0){
+            gameOver.call(this);
+        }
+        else{
+            startNewBalloon.call(this);
+        }
+    }
+
+    function gameOver(){
+        const gameOverText=this.add.text(config.width/2,coifig.height/2,'Game Over!',{
+            font:'64px Arial',
+            fill:'#ff0000',
+            fontStyle:'bold',
+        });
+        gameOverText.setOrigin(0.5,0.5);
+
+        this.physics.pause();
+    this.input.on('pointerdown', () => { window.location.reload(); });
     }
 
     function update() {
